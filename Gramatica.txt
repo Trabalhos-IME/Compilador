@@ -1,0 +1,77 @@
+P -> LDE
+
+LDE -> LDE DE
+	DE
+
+DE -> DV
+	  B
+
+B -> ‘{‘ LS ‘}
+
+T -> ‘integer’
+	‘char’
+	‘string’
+	‘boolean
+
+
+
+DV -> ‘var’ LI ‘:’ T ‘;'
+LI -> LI ‘,’ IDD
+	IDD
+
+LS -> S LS1
+LS1 ->  S  LS1
+  	vazio
+
+S ->  ‘if’ ’(‘ E ‘)’ S
+	‘if’ ’(‘ E ‘)’ S ‘else’ S
+	‘while’ ’(‘ E ‘)’ S
+	‘do’  S ‘while’ ’(‘ E ‘)’ 
+	B
+	E ‘;’
+	‘break’  ‘;'
+	DV
+	IDU ‘:=‘ E ‘;'
+
+E -> E ‘&&’ F
+	E ‘||’ F
+	E ‘<' F
+	E ‘>’ F
+	E ‘<=‘ F
+	E ‘>=’ F
+	E ‘==’ F
+	E ‘!=’ F
+	E ‘+’ F
+	E ‘-‘ F
+	E ‘*’ F
+	E ‘/‘ F
+	F
+
+F ->  ‘!’ F
+	TRUE
+	FALSE
+	CHR
+	STR
+	NUM
+	IDU
+
+
+IDD -> Id
+IDU -> Id
+
+TRUE -> ‘true’
+FALSE -> ‘false’
+CHR -> c
+STR -> s
+NUM -> n
+
+letra = ‘a’…’z' + ‘A’…’Z’
+digito = ‘0’…’9’
+
+Id = letra. (letra + digito)*
+
+n = digito*
+
+c = ‘“.any.”’
+
+s = ‘“.any*.”’
