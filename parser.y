@@ -12,8 +12,8 @@
 	
 	int yyerror( char *s)
 	{
-	fprintf( stderr, "Erro bison: %s \n", s);
-	return 1;
+            fprintf( stderr, "Erro bison: %s \n", s);
+            return 1;
 	}
 
         pobject p, t, t1, t2;
@@ -78,8 +78,6 @@
 %token <tokenSecundario> NUMERAL
 
 %token UNKNOWN
-
-
 
 
 %type <attributedSymbol> TP E F LI IDD IDU TRUE_ FALSE_ CHR STR NUM ME MT MW
@@ -189,7 +187,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
                                                                     l = $5._.MT.label;
                                                                     if(!CheckTypes(t, pBool))
                                                                     {
-                                                                        printf("Erro, bool expected\n");
+                                                                        Error(ERR_BOOL_TYPE_EXPECTED);
                                                                     }
                                                                     fprintf(f, "L%d:\n", l);
                                                                 }
@@ -200,7 +198,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
                                                                             if(!CheckTypes(t, pBool))
                                                                             {
 
-                                                                                printf("Erro, bool expected\n");
+                                                                                Error(ERR_BOOL_TYPE_EXPECTED);
                                                                             }
                                                                             fprintf(f, "\tJMP_FW L%d\nL%d\n", l2, l1);
                                                                         }
@@ -214,7 +212,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
                                                                         if(!CheckTypes(t, pBool))
                                                                         {
 
-                                                                            printf("Erro, bool expected\n");
+                                                                            Error(ERR_BOOL_TYPE_EXPECTED);
                                                                         }
                                                                         fprintf(f, "\tJMP_BW L%d\nL%d\n", l1, l2);
                                                                     }
@@ -237,18 +235,18 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
 |		DV
 ;
 
-/*Expressao e seus operadores logicos e aritmeticos*/
+                /*Expressao e seus operadores logicos e aritmeticos*/
 E:		E AND F                                 {
                                                             if(!CheckTypes($1._.E.type, pBool))
                                                             {
 
-                                                               printf("Erro, bool expected\n");
+                                                               Error(ERR_BOOL_TYPE_EXPECTED);
                                                             }
 
                                                             if(!CheckTypes($3._.F.type, pBool))
                                                             {
 
-                                                                printf("Erro, bool expected\n");
+                                                                Error(ERR_BOOL_TYPE_EXPECTED);
                                                             }
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tAND\n" );
@@ -493,9 +491,13 @@ IDD: ID
                 $$._.IDD.name = $1;
 		object *p;
                         if( (p= SearchCurrentLevel($1)) != NULL)
-				printf("Erro de redeclaracao");
+                        {
+                                Error(ERR_REDECL);
+                        }
 			else
+                        {
                                 p = Define($1);
+                        }
 		p->eKind = NO_KIND_DEF_;
                 $$._.IDD.obj = p;
 	}
@@ -504,12 +506,12 @@ IDD: ID
 
 
 IDU: ID
-{
+        {
                 $$._.IDD.name = $1;
 		object *p;
                         if( (p= SearchAllSymbolTable($1)) == NULL)
 			{
-				printf("Erro de nao declaracao");
+                                Error(ERR_NOT_DECL);
                                 p = Define($1);
 			}
 
@@ -521,11 +523,13 @@ IDU: ID
 TRUE_:	T_TRUE { $$._.TRUE.type = pBool;
                $$._.TRUE.val = 1;
              }
+             // 1 equivale a true
 ;
 
 FALSE_:	T_FALSE { $$._.FALSE.type = pBool;
                 $$._.FALSE.val = 0;
               }
+              // 0 equivale a false
 ;
 
 CHR:	CHARACTER { $$._.CHR.type = pChar;

@@ -100,5 +100,6 @@ extern pobject pUniversal ;
   Verifica se dois tipos sao compativeis por nome
 */
 int CheckTypes(pobject type1, pobject type2);
+int CheckTypesForLogicalOperations(t_attrib op1, t_attrib op2);
 
 #endif

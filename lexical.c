@@ -1,13 +1,8 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include "utils.h"
 #include "lexical.h"
-
-// Macro para alocar memoria e copiar uma string (deep copy)
-#define MYSTRDUP(dest,source) strcpy(dest = (char*) malloc(strlen(source)+1),source)
-#define KEYWORDS_LEN 11
-#define RESERVED_OFFSET BOOLEAN
 
 
 t_const constants[MAX_CONSTS];

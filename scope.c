@@ -17,13 +17,14 @@ int NewBlock()
 }
 
 /**
+  Funcao que finaliza o bloco de escopo corrente. A liberacao dos elementos do escopo finalizado nao ocorre neste momento
 */
 int EndBlock()
 {
 	return --numCurrentLevel;
 }
 /**
-
+    Funcao que insere identificadores na tabela de simbolos
 */
 pobject Define(int aName)
 {
@@ -35,13 +36,13 @@ pobject Define(int aName)
 	if(SymbolTable[numCurrentLevel] == NULL)
 	{
 		SymbolTable[numCurrentLevel] = obj;
-		SymbolTableLast[numCurrentLevel] = obj;
 	}
 	else
 	{
 		SymbolTable[numCurrentLevel]->pNext = obj;
-		SymbolTableLast[numCurrentLevel] = obj;
 	}
+    SymbolTableLast[numCurrentLevel] = obj;
+
 	return obj;
 }
 
@@ -65,7 +66,12 @@ pobject SearchCurrentLevel(int aName)
 	}
     return obj;
 }
-
+/**
+ * @brief SearchAllSymbolTable
+ * Funcao que procura por um indentificador em todos os niveis da tabela de simbolos
+ * @param aName token secundario do identificador que deseja-se buscar
+ * @return Referencia para o identificador na tabela de simbolos ou NULL caso ele nao seja encontrado
+ */
 pobject SearchAllSymbolTable(int aName)
 {
 	int i;

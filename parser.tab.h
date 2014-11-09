@@ -39,89 +39,89 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     ASSIGN = 258,
-     NOT_EQUAL = 259,
-     LESS_THAN = 260,
-     GREATER_THAN = 261,
-     LESS_OR_EQUAL = 262,
-     GREATER_OR_EQUAL = 263,
-     EQUAL_EQUAL = 264,
-     AND = 265,
-     OR = 266,
-     PLUS = 267,
-     MINUS = 268,
-     TIMES = 269,
-     DIVIDE = 270,
+     BOOLEAN = 258,
+     BREAK = 259,
+     CHAR = 260,
+     DO = 261,
+     ELSE = 262,
+     T_FALSE = 263,
+     IF = 264,
+     INTEGER = 265,
+     STRING = 266,
+     T_TRUE = 267,
+     VAR = 268,
+     WHILE = 269,
+     ASSIGN = 270,
      COLON = 271,
-     SEMICOLON = 272,
-     COMMA = 273,
-     LEFT_BRACES = 274,
-     RIGHT_BRACES = 275,
-     LEFT_SQUARE = 276,
-     RIGHT_SQUARE = 277,
-     LEFT_PARENTHESIS = 278,
-     RIGHT_PARENTHESIS = 279,
-     NOT = 280,
-     UNKNOWN = 281,
-     T_TRUE = 282,
-     T_FALSE = 283,
-     CHARACTER = 284,
-     STRINGVAL = 285,
-     ID = 286,
-     NUMERAL = 287,
-     INTEGER = 288,
-     CHAR = 289,
-     BOOLEAN = 290,
-     STRING = 291,
-     VAR = 292,
-     IF = 293,
-     ELSE = 294,
-     WHILE = 295,
-     DO = 296,
-     BREAK = 297
+     COMMA = 272,
+     NOT_EQUAL = 273,
+     LESS_THAN = 274,
+     GREATER_THAN = 275,
+     LESS_OR_EQUAL = 276,
+     GREATER_OR_EQUAL = 277,
+     EQUAL_EQUAL = 278,
+     AND = 279,
+     OR = 280,
+     PLUS = 281,
+     MINUS = 282,
+     TIMES = 283,
+     DIVIDE = 284,
+     SEMICOLON = 285,
+     LEFT_BRACES = 286,
+     RIGHT_BRACES = 287,
+     LEFT_SQUARE = 288,
+     RIGHT_SQUARE = 289,
+     LEFT_PARENTHESIS = 290,
+     RIGHT_PARENTHESIS = 291,
+     NOT = 292,
+     CHARACTER = 293,
+     STRINGVAL = 294,
+     ID = 295,
+     NUMERAL = 296,
+     UNKNOWN = 297
    };
 #endif
 /* Tokens.  */
-#define ASSIGN 258
-#define NOT_EQUAL 259
-#define LESS_THAN 260
-#define GREATER_THAN 261
-#define LESS_OR_EQUAL 262
-#define GREATER_OR_EQUAL 263
-#define EQUAL_EQUAL 264
-#define AND 265
-#define OR 266
-#define PLUS 267
-#define MINUS 268
-#define TIMES 269
-#define DIVIDE 270
+#define BOOLEAN 258
+#define BREAK 259
+#define CHAR 260
+#define DO 261
+#define ELSE 262
+#define T_FALSE 263
+#define IF 264
+#define INTEGER 265
+#define STRING 266
+#define T_TRUE 267
+#define VAR 268
+#define WHILE 269
+#define ASSIGN 270
 #define COLON 271
-#define SEMICOLON 272
-#define COMMA 273
-#define LEFT_BRACES 274
-#define RIGHT_BRACES 275
-#define LEFT_SQUARE 276
-#define RIGHT_SQUARE 277
-#define LEFT_PARENTHESIS 278
-#define RIGHT_PARENTHESIS 279
-#define NOT 280
-#define UNKNOWN 281
-#define T_TRUE 282
-#define T_FALSE 283
-#define CHARACTER 284
-#define STRINGVAL 285
-#define ID 286
-#define NUMERAL 287
-#define INTEGER 288
-#define CHAR 289
-#define BOOLEAN 290
-#define STRING 291
-#define VAR 292
-#define IF 293
-#define ELSE 294
-#define WHILE 295
-#define DO 296
-#define BREAK 297
+#define COMMA 272
+#define NOT_EQUAL 273
+#define LESS_THAN 274
+#define GREATER_THAN 275
+#define LESS_OR_EQUAL 276
+#define GREATER_OR_EQUAL 277
+#define EQUAL_EQUAL 278
+#define AND 279
+#define OR 280
+#define PLUS 281
+#define MINUS 282
+#define TIMES 283
+#define DIVIDE 284
+#define SEMICOLON 285
+#define LEFT_BRACES 286
+#define RIGHT_BRACES 287
+#define LEFT_SQUARE 288
+#define RIGHT_SQUARE 289
+#define LEFT_PARENTHESIS 290
+#define RIGHT_PARENTHESIS 291
+#define NOT 292
+#define CHARACTER 293
+#define STRINGVAL 294
+#define ID 295
+#define NUMERAL 296
+#define UNKNOWN 297
 
 
 
