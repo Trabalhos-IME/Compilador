@@ -46,11 +46,31 @@ int CheckTypesForLogicalOperations(t_attrib op1, t_attrib op2)
     {
 
         Error(ERR_BOOL_TYPE_EXPECTED);
+        return 0;
     }
 
     if(!CheckTypes(op2._.F.type, pBool))
     {
 
         Error(ERR_BOOL_TYPE_EXPECTED);
+        return 0;
     }
+    return 1;
 }
+
+int CheckTypesForArithmeticsOperations(t_attrib op1, t_attrib op2)
+{
+    if(!CheckTypes(op1._.E.type, op2._.F.type))
+    {
+        Error(ERR_TYPE_MISMATCH);
+        return 0;
+    }
+    if(!CheckTypes(op1._.E.type, pInt))
+    {
+
+       Error(ERR_INT_TYPE_EXPECTED);
+       return 0;
+    }
+    return 1;
+}
+

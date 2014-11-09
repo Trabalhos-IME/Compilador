@@ -237,172 +237,62 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
 
                 /*Expressao e seus operadores logicos e aritmeticos*/
 E:		E AND F                                 {
-                                                            if(!CheckTypes($1._.E.type, pBool))
-                                                            {
-
-                                                               Error(ERR_BOOL_TYPE_EXPECTED);
-                                                            }
-
-                                                            if(!CheckTypes($3._.F.type, pBool))
-                                                            {
-
-                                                                Error(ERR_BOOL_TYPE_EXPECTED);
-                                                            }
+                                                            CheckTypesForLogicalOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tAND\n" );
                                                         }
 |		E OR F                                  {
-                                                            if(!CheckTypes($1._.E.type, pBool))
-                                                            {
-
-                                                                printf("Erro, bool expected\n");
-                                                            }
-
-                                                            if(!CheckTypes($3._.F.type, pBool))
-                                                            {
-
-                                                                printf("Erro, bool expected\n");
-                                                            }
+                                                            CheckTypesForLogicalOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tOR\n");
                                                         }
 |		E LESS_THAN F                           {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tLT\n");
                                                         }
 |		E GREATER_THAN F                        {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tGT\n");
                                                         }
 |		E LESS_OR_EQUAL F                       {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tLE\n");
                                                         }
 |		E GREATER_OR_EQUAL F                    {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tGE\n");
                                                         }
 |		E EQUAL_EQUAL F                         {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tEQ\n");
                                                         }
 |		E NOT_EQUAL F                           {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = pBool;
                                                             fprintf(f, "\tNE\n");
                                                         }
 |		E PLUS F 				{
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = $1._.F.type;
                                                             fprintf(f, "\tADD\n");
                                                         }
 |		E MINUS F                               {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                               printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = $1._.F.type;
                                                             fprintf(f, "\tSUB\n");
                                                         }
 |		E TIMES F                               {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = $1._.F.type;
                                                             fprintf(f, "\tMUL\n");
                                                         }
 |		E DIVIDE F                              {
-                                                            if(!CheckTypes($1._.E.type, $3._.F.type))
-                                                            {
-
-                                                               printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes($1._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations($1, $3);
                                                             $$._.E.type = $1._.F.type;
                                                             fprintf(f, "\tDIV\n");
 
@@ -415,7 +305,7 @@ E:		E AND F                                 {
 F:		NOT F                                   {
                                                             if(!CheckTypes($2._.F.type, pBool))
                                                             {
-                                                               printf("Erro, boolean expected\n");
+                                                               Error(ERR_BOOL_TYPE_EXPECTED);
                                                             }
                                                             $$._.F.type = $2._.F.type;
                                                             fprintf(f, "\tNOT\n");
@@ -450,7 +340,7 @@ F:		NOT F                                   {
                                                             if(p->eKind != VAR_ )
                                                             {
                                                                 if(p->eKind != UNIVERSAL_)
-                                                                   printf("Erro, KIND NOT VAR\n");
+                                                                   Error(ERR_KIND_NOT_VAR);
                                                                 $$._.F.type = pUniversal;
                                                             }
                                                             else
@@ -464,7 +354,7 @@ F:		NOT F                                   {
                                                             p = $1._.IDU.obj;
                                                             if(p->eKind != VAR_)
                                                             {
-                                                                printf("Erro KIND NOT VAR\n");
+                                                                Error(ERR_KIND_NOT_VAR);
                                                                 $$._.F.type = pUniversal;
                                                             }
                                                             else
@@ -475,7 +365,7 @@ F:		NOT F                                   {
 
                                                                 if(!CheckTypes(t1, t2))
                                                                 {
-                                                                   printf("Erro de compatibilidade de tipos\n");
+                                                                   Error(ERR_TYPE_MISMATCH);
                                                                 }
                                                                 $$._.F.type = t2;
 

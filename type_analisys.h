@@ -101,5 +101,6 @@ extern pobject pUniversal ;
 */
 int CheckTypes(pobject type1, pobject type2);
 int CheckTypesForLogicalOperations(t_attrib op1, t_attrib op2);
+int CheckTypesForArithmeticsOperations(t_attrib op1, t_attrib op2);
 
 #endif
