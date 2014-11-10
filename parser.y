@@ -468,8 +468,9 @@ CHR:	CHARACTER { $$._.CHR.type = pChar;
 
 STR:	STRINGVAL { $$._.STR.type = pString;
                     $$._.STR.pos = $1;
-                    $$._.STR.val = getStringConst($1); //VERIFICAR
+                    $$._.STR.val = getStringConst($1);
                   }
+                  //TODO: investigar alocacao de memoria da string
 ;
 
 NUM:	NUMERAL { $$._.NUM.type = pInt;
