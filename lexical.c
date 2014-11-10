@@ -102,7 +102,7 @@ char *getStringConst(int n){
 t_token searchKeyWord(char* name, int begin, int end){
      if(begin <= end){
 		int middle = (end + begin)/2;
-        //printf("begin: %d middle: %d end: %d\n",begin, middle, end);
+
         int result = strcmp(name, keyWords[middle]);
           if(result == 0){
               return (t_token) middle;
@@ -192,7 +192,6 @@ t_token nextToken(){
     //le alfa numericos
 	if( isalpha(nextChar) )
 	{
-        printf("Lendo alfa numerico   ");
 		char text[MAX_ID_LEN+1];
 		int i = 0;
 		do
@@ -214,14 +213,13 @@ t_token nextToken(){
         {
             //preciso fazer esse mapeamento porque a enumeracao criada pelo bison nao inicia em 0.
             //O valor retornado por searchKeyWord considera apenas a posicao dentro do vetor
-            token = token + RESERVED_OFFSET; //reservedTokens[token]; //mapping
+            token = token + RESERVED_OFFSET; //mapping
         }
 	}
 	else
     //Se for digito
 	if (isdigit(nextChar) )
 	{
-        printf("Lendo digitos   ");
 
 		char numeral[MAX_NUM_LEN+1];
 		int i = 1;
