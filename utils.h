@@ -31,6 +31,7 @@
 #define MYSTRDUP(dest,source) strcpy(dest = (char*) malloc(strlen(source)+1),source)
 
 void Error(int code);
+void debugPrint(FILE* f, char* msg);
 
 
 

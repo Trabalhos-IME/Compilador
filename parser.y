@@ -30,8 +30,6 @@
 }
 
 
-
-
 %token BOOLEAN
 %token BREAK
 %token CHAR
@@ -61,6 +59,9 @@
 %left MINUS
 %left TIMES
 %left DIVIDE
+
+%token PLUS_PLUS
+%token MINUS_MINUS
 
 %token SEMICOLON
 
@@ -194,7 +195,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
                                                                     {
                                                                         Error(ERR_BOOL_TYPE_EXPECTED);
                                                                     }
-                                                                    fprintf(f, "L%d:\n", l);
+                                                                    fprintf(f, "L%d\n", l);
                                                                 }
                 /*if e else: if(x) statement; else statement*/
 |		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S ELSE ME S    {
@@ -205,7 +206,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
 
                                                                                 Error(ERR_BOOL_TYPE_EXPECTED);
                                                                             }
-                                                                            fprintf(f, "L%d:\n", l);
+                                                                            fprintf(f, "L%d\n", l);
                                                                         }
                 /*Laco while: while(x) statement;*/
 |		WHILE MW LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S   {
@@ -412,6 +413,44 @@ F:		NOT F                                   {
 
                                                             }
                                                         }
+
+|               PLUS_PLUS IDU                           {
+                                                            p = $2._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tINC\n\tDUP\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+|               IDU PLUS_PLUS                           {
+                                                            p = $1._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tDUP\n\tINC\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+|               MINUS_MINUS IDU                           {
+                                                            p = $2._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tDEC\n\tDUP\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+|               IDU MINUS_MINUS                         {
+                                                            p = $1._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tDUP\n\tDEC\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+
 ;
 
 IDD: ID

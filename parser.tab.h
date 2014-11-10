@@ -66,20 +66,22 @@
      MINUS = 282,
      TIMES = 283,
      DIVIDE = 284,
-     SEMICOLON = 285,
-     LEFT_BRACES = 286,
-     RIGHT_BRACES = 287,
-     LEFT_SQUARE = 288,
-     RIGHT_SQUARE = 289,
-     LEFT_PARENTHESIS = 290,
-     RIGHT_PARENTHESIS = 291,
-     NOT = 292,
-     CHARACTER = 293,
-     STRINGVAL = 294,
-     ID = 295,
-     NUMERAL = 296,
-     _EOF = 297,
-     UNKNOWN = 298
+     PLUS_PLUS = 285,
+     MINUS_MINUS = 286,
+     SEMICOLON = 287,
+     LEFT_BRACES = 288,
+     RIGHT_BRACES = 289,
+     LEFT_SQUARE = 290,
+     RIGHT_SQUARE = 291,
+     LEFT_PARENTHESIS = 292,
+     RIGHT_PARENTHESIS = 293,
+     NOT = 294,
+     CHARACTER = 295,
+     STRINGVAL = 296,
+     ID = 297,
+     NUMERAL = 298,
+     _EOF = 299,
+     UNKNOWN = 300
    };
 #endif
 /* Tokens.  */
@@ -110,20 +112,22 @@
 #define MINUS 282
 #define TIMES 283
 #define DIVIDE 284
-#define SEMICOLON 285
-#define LEFT_BRACES 286
-#define RIGHT_BRACES 287
-#define LEFT_SQUARE 288
-#define RIGHT_SQUARE 289
-#define LEFT_PARENTHESIS 290
-#define RIGHT_PARENTHESIS 291
-#define NOT 292
-#define CHARACTER 293
-#define STRINGVAL 294
-#define ID 295
-#define NUMERAL 296
-#define _EOF 297
-#define UNKNOWN 298
+#define PLUS_PLUS 285
+#define MINUS_MINUS 286
+#define SEMICOLON 287
+#define LEFT_BRACES 288
+#define RIGHT_BRACES 289
+#define LEFT_SQUARE 290
+#define RIGHT_SQUARE 291
+#define LEFT_PARENTHESIS 292
+#define RIGHT_PARENTHESIS 293
+#define NOT 294
+#define CHARACTER 295
+#define STRINGVAL 296
+#define ID 297
+#define NUMERAL 298
+#define _EOF 299
+#define UNKNOWN 300
 
 
 
@@ -137,7 +141,7 @@ typedef union YYSTYPE
         t_attrib attributedSymbol;
 }
 /* Line 1529 of yacc.c.  */
-#line 141 "parser.tab.h"
+#line 145 "parser.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
