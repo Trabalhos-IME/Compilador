@@ -4,26 +4,17 @@
 extern int yyparse();
 extern FILE *f;
 
-int main(int argv, char** argc)
+int main(int argc, char** argv)
 {
 	printf("Start\n");
-	
-	fileToCompile = fopen("teste.txt", "r");
-    f = fopen("compiled_code.txt", "w");
-    /*t_token t = nextToken();
-	while( nextChar != EOF)
-	{
-		printf("%d\n", t);
-		t = nextToken();
-    }*/
-    if(!yyparse())
-            printf("Compilou legal\n");
+    if(argc < 1)
+        fileToCompile = fopen("teste_string.txt", "r");
     else
-        printf("Mostre-me os erros\n");
-
-
-	fclose(fileToCompile);
-    fclose(f);
+        fileToCompile = fopen(argv[1], "r");
+    if(!yyparse())
+        printf("Compilou legal\n");
+    else
+        printf("Houve erros de compilacao\n");
 
 	return 0;
 }

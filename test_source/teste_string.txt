@@ -1,9 +1,12 @@
 var x:integer;
 var y:integer;
 var z:string;
+var k:char;
 {
+	z = "amor";
 	x = 8;
 	y = 9;
+	k = 'a';
 	while (x != y)
 	{
 		
@@ -12,4 +15,5 @@ var z:string;
 	}
 	x != y;
 	x = 2 + 3 * 4;
+	
 }

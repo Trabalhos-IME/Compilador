@@ -47,6 +47,7 @@ typedef struct {
 
 } t_const;
 
+void printToken(t_token token);
 
 int addCharConst(char c);
 int addIntConst(int n);

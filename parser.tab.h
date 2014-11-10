@@ -78,7 +78,8 @@
      STRINGVAL = 294,
      ID = 295,
      NUMERAL = 296,
-     UNKNOWN = 297
+     _EOF = 297,
+     UNKNOWN = 298
    };
 #endif
 /* Tokens.  */
@@ -121,7 +122,8 @@
 #define STRINGVAL 294
 #define ID 295
 #define NUMERAL 296
-#define UNKNOWN 297
+#define _EOF 297
+#define UNKNOWN 298
 
 
 
@@ -135,7 +137,7 @@ typedef union YYSTYPE
         t_attrib attributedSymbol;
 }
 /* Line 1529 of yacc.c.  */
-#line 139 "parser.tab.h"
+#line 141 "parser.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

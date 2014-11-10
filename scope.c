@@ -39,7 +39,12 @@ pobject Define(int aName)
 	}
 	else
 	{
-		SymbolTable[numCurrentLevel]->pNext = obj;
+        pobject aux = SymbolTable[numCurrentLevel];
+        while(aux->pNext != NULL)
+            aux = aux->pNext;
+
+        aux->pNext = obj;
+        //SymbolTable[numCurrentLevel]->pNext = obj;
 	}
     SymbolTableLast[numCurrentLevel] = obj;
 

@@ -105,7 +105,8 @@
      STRINGVAL = 294,
      ID = 295,
      NUMERAL = 296,
-     UNKNOWN = 297
+     _EOF = 297,
+     UNKNOWN = 298
    };
 #endif
 /* Tokens.  */
@@ -148,7 +149,8 @@
 #define STRINGVAL 294
 #define ID 295
 #define NUMERAL 296
-#define UNKNOWN 297
+#define _EOF 297
+#define UNKNOWN 298
 
 
 
@@ -169,12 +171,12 @@
 	
 	int yyerror( char *s)
 	{
-	fprintf( stderr, "Erro bison: %s \n", s);
-	return 1;
+            fprintf( stderr, "Erro bison: %s \n", s);
+            return 1;
 	}
 
         pobject p, t, t1, t2;
-        int l, l1, l2, n, s;
+        int l, l1, l2, n, s, globalIndex = 0;
 
         FILE* f ;
 
@@ -206,7 +208,7 @@ typedef union YYSTYPE
         t_attrib attributedSymbol;
 }
 /* Line 193 of yacc.c.  */
-#line 210 "parser.tab.c"
+#line 212 "parser.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -219,7 +221,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 223 "parser.tab.c"
+#line 225 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -434,20 +436,20 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   160
+#define YYLAST   177
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  43
+#define YYNTOKENS  44
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  25
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  57
+#define YYNRULES  58
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  93
+#define YYNSTATES  97
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   297
+#define YYMAXUTOK   298
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -484,7 +486,7 @@ static const yytype_uint8 yytranslate[] =
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42
+      35,    36,    37,    38,    39,    40,    41,    42,    43
 };
 
 #if YYDEBUG
@@ -492,45 +494,46 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     6,     7,    10,    12,    14,    16,    22,
-      26,    28,    30,    32,    34,    36,    41,    42,    45,    48,
-      49,    50,    51,    52,    59,    69,    77,    79,    82,    85,
-      87,    91,    95,    99,   103,   107,   111,   115,   119,   123,
-     127,   131,   135,   137,   140,   142,   144,   146,   148,   150,
-     152,   156,   158,   160,   162,   164,   166,   168
+       0,     0,     3,     7,     8,    11,    13,    15,    17,    23,
+      27,    29,    31,    33,    35,    37,    42,    43,    46,    49,
+      50,    51,    52,    53,    60,    70,    78,    80,    83,    86,
+      88,    92,    96,   100,   104,   108,   112,   116,   120,   124,
+     128,   132,   136,   138,   141,   143,   145,   147,   149,   151,
+     153,   158,   162,   164,   166,   168,   170,   172,   174
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      44,     0,    -1,    45,    46,    -1,    -1,    46,    47,    -1,
-      47,    -1,    48,    -1,    51,    -1,    13,    49,    16,    50,
-      30,    -1,    49,    17,    61,    -1,    61,    -1,    10,    -1,
-       5,    -1,     3,    -1,    11,    -1,    52,    31,    53,    32,
-      -1,    -1,    58,    54,    -1,    58,    54,    -1,    -1,    -1,
-      -1,    -1,     9,    35,    59,    36,    55,    58,    -1,     9,
-      35,    59,    36,    55,    58,     7,    56,    58,    -1,    14,
-      57,    35,    59,    36,    55,    58,    -1,    51,    -1,    59,
-      30,    -1,     4,    30,    -1,    48,    -1,    59,    24,    60,
-      -1,    59,    25,    60,    -1,    59,    19,    60,    -1,    59,
-      20,    60,    -1,    59,    21,    60,    -1,    59,    22,    60,
-      -1,    59,    23,    60,    -1,    59,    18,    60,    -1,    59,
-      26,    60,    -1,    59,    27,    60,    -1,    59,    28,    60,
-      -1,    59,    29,    60,    -1,    60,    -1,    37,    60,    -1,
-      63,    -1,    64,    -1,    65,    -1,    66,    -1,    67,    -1,
-      62,    -1,    62,    15,    59,    -1,    40,    -1,    40,    -1,
-      12,    -1,     8,    -1,    38,    -1,    39,    -1,    41,    -1
+      45,     0,    -1,    46,    47,    42,    -1,    -1,    47,    48,
+      -1,    48,    -1,    49,    -1,    52,    -1,    13,    50,    16,
+      51,    30,    -1,    50,    17,    62,    -1,    62,    -1,    10,
+      -1,     5,    -1,     3,    -1,    11,    -1,    53,    31,    54,
+      32,    -1,    -1,    59,    55,    -1,    59,    55,    -1,    -1,
+      -1,    -1,    -1,     9,    35,    60,    36,    56,    59,    -1,
+       9,    35,    60,    36,    56,    59,     7,    57,    59,    -1,
+      14,    58,    35,    60,    36,    56,    59,    -1,    52,    -1,
+      60,    30,    -1,     4,    30,    -1,    49,    -1,    60,    24,
+      61,    -1,    60,    25,    61,    -1,    60,    19,    61,    -1,
+      60,    20,    61,    -1,    60,    21,    61,    -1,    60,    22,
+      61,    -1,    60,    23,    61,    -1,    60,    18,    61,    -1,
+      60,    26,    61,    -1,    60,    27,    61,    -1,    60,    28,
+      61,    -1,    60,    29,    61,    -1,    61,    -1,    37,    61,
+      -1,    64,    -1,    65,    -1,    66,    -1,    67,    -1,    68,
+      -1,    63,    -1,    63,    33,    60,    34,    -1,    63,    15,
+      60,    -1,    40,    -1,    40,    -1,    12,    -1,     8,    -1,
+      38,    -1,    39,    -1,    41,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    89,    89,    93,    99,   100,   103,   104,   107,   122,
-     126,   129,   132,   135,   138,   143,   148,   154,   156,   157,
-     161,   169,   178,   185,   195,   206,   220,   226,   230,   235,
-     239,   254,   269,   283,   297,   311,   325,   339,   353,   367,
-     381,   395,   410,   415,   423,   428,   433,   438,   443,   448,
-     463,   489,   504,   519,   524,   529,   535,   541
+       0,    90,    90,    97,   104,   105,   108,   109,   112,   127,
+     131,   134,   137,   140,   143,   148,   153,   159,   161,   162,
+     166,   174,   183,   190,   200,   211,   225,   231,   235,   240,
+     244,   249,   254,   259,   264,   269,   274,   279,   284,   289,
+     294,   299,   305,   310,   318,   323,   328,   333,   338,   343,
+     359,   391,   417,   436,   451,   457,   463,   469,   475
 };
 #endif
 
@@ -545,10 +548,10 @@ static const char *const yytname[] =
   "LESS_OR_EQUAL", "GREATER_OR_EQUAL", "EQUAL_EQUAL", "AND", "OR", "PLUS",
   "MINUS", "TIMES", "DIVIDE", "SEMICOLON", "LEFT_BRACES", "RIGHT_BRACES",
   "LEFT_SQUARE", "RIGHT_SQUARE", "LEFT_PARENTHESIS", "RIGHT_PARENTHESIS",
-  "NOT", "CHARACTER", "STRINGVAL", "ID", "NUMERAL", "UNKNOWN", "$accept",
-  "PROGRAM", "OPEN", "LDE", "DE", "DV", "LI", "TP", "BLOCK", "NB", "LS",
-  "LS1", "MT", "ME", "MW", "S", "E", "F", "IDD", "IDU", "TRUE_", "FALSE_",
-  "CHR", "STR", "NUM", 0
+  "NOT", "CHARACTER", "STRINGVAL", "ID", "NUMERAL", "_EOF", "UNKNOWN",
+  "$accept", "PROGRAM", "OPEN", "LDE", "DE", "DV", "LI", "TP", "BLOCK",
+  "NB", "LS", "LS1", "MT", "ME", "MW", "S", "E", "F", "IDD", "IDU",
+  "TRUE_", "FALSE_", "CHR", "STR", "NUM", 0
 };
 #endif
 
@@ -561,30 +564,30 @@ static const yytype_uint16 yytoknum[] =
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296,   297
+     295,   296,   297,   298
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    43,    44,    45,    46,    46,    47,    47,    48,    49,
-      49,    50,    50,    50,    50,    51,    52,    53,    54,    54,
-      55,    56,    57,    58,    58,    58,    58,    58,    58,    58,
-      59,    59,    59,    59,    59,    59,    59,    59,    59,    59,
-      59,    59,    59,    60,    60,    60,    60,    60,    60,    60,
-      60,    61,    62,    63,    64,    65,    66,    67
+       0,    44,    45,    46,    47,    47,    48,    48,    49,    50,
+      50,    51,    51,    51,    51,    52,    53,    54,    55,    55,
+      56,    57,    58,    59,    59,    59,    59,    59,    59,    59,
+      60,    60,    60,    60,    60,    60,    60,    60,    60,    60,
+      60,    60,    60,    61,    61,    61,    61,    61,    61,    61,
+      61,    61,    62,    63,    64,    65,    66,    67,    68
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     0,     2,     1,     1,     1,     5,     3,
+       0,     2,     3,     0,     2,     1,     1,     1,     5,     3,
        1,     1,     1,     1,     1,     4,     0,     2,     2,     0,
        0,     0,     0,     6,     9,     7,     1,     2,     2,     1,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
        3,     3,     1,     2,     1,     1,     1,     1,     1,     1,
-       3,     1,     1,     1,     1,     1,     1,     1
+       4,     3,     1,     1,     1,     1,     1,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -592,49 +595,49 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       3,     0,    16,     1,     0,     2,     5,     6,     7,     0,
-      51,     0,    10,     4,    16,     0,     0,     0,    54,     0,
-      53,    22,     0,    55,    56,    52,    57,    29,    26,     0,
-      16,     0,    42,    49,    44,    45,    46,    47,    48,    13,
-      12,    11,    14,     0,     9,    28,     0,     0,    43,    15,
-      17,    16,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    27,     0,     8,     0,     0,    18,
-      37,    32,    33,    34,    35,    36,    30,    31,    38,    39,
-      40,    41,    50,    20,     0,    16,    20,    23,    16,    21,
-      25,    16,    24
+       3,     0,    16,     1,     0,    16,     5,     6,     7,     0,
+      52,     0,    10,     2,     4,    16,     0,     0,     0,    55,
+       0,    54,    22,     0,    56,    57,    53,    58,    29,    26,
+       0,    16,     0,    42,    49,    44,    45,    46,    47,    48,
+      13,    12,    11,    14,     0,     9,    28,     0,     0,    43,
+      15,    17,    16,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    27,     0,     0,     8,     0,
+       0,    18,    37,    32,    33,    34,    35,    36,    30,    31,
+      38,    39,    40,    41,    51,     0,    20,     0,    50,    16,
+      20,    23,    16,    21,    25,    16,    24
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     2,     5,     6,    27,    11,    43,    28,     9,
-      29,    50,    85,    91,    47,    51,    31,    32,    12,    33,
-      34,    35,    36,    37,    38
+      -1,     1,     2,     5,     6,    28,    11,    44,    29,     9,
+      30,    51,    89,    95,    48,    52,    32,    33,    12,    34,
+      35,    36,    37,    38,    39
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -40
+#define YYPACT_NINF -41
 static const yytype_int16 yypact[] =
 {
-     -40,     6,     4,   -40,   -24,   -10,   -40,   -40,   -40,   -13,
-     -40,    -4,   -40,   -40,    49,    -1,   -24,    -8,   -40,    -7,
-     -40,   -40,    56,   -40,   -40,   -40,   -40,   -40,   -40,    -5,
-      11,   118,   -40,    15,   -40,   -40,   -40,   -40,   -40,   -40,
-     -40,   -40,   -40,    14,   -40,   -40,    56,    10,   -40,   -40,
-     -40,    11,    56,    56,    56,    56,    56,    56,    56,    56,
-      56,    56,    56,    56,   -40,    56,   -40,    80,    56,   -40,
-     -40,   -40,   -40,   -40,   -40,   -40,   -40,   -40,   -40,   -40,
-     -40,   -40,   131,   -40,    99,    49,   -40,    39,    49,   -40,
-     -40,    49,   -40
+     -41,    13,     5,   -41,   -28,     3,   -41,   -41,   -41,    -9,
+     -41,   -11,   -41,   -41,   -41,    49,    -1,   -28,    -2,   -41,
+      -6,   -41,   -41,    56,   -41,   -41,   -41,   -41,   -41,   -41,
+      14,    11,   135,   -41,   -12,   -41,   -41,   -41,   -41,   -41,
+     -41,   -41,   -41,   -41,    17,   -41,   -41,    56,     9,   -41,
+     -41,   -41,    11,    56,    56,    56,    56,    56,    56,    56,
+      56,    56,    56,    56,    56,   -41,    56,    56,   -41,    80,
+      56,   -41,   -41,   -41,   -41,   -41,   -41,   -41,   -41,   -41,
+     -41,   -41,   -41,   -41,   148,   118,   -41,    99,   -41,    49,
+     -41,    47,    49,   -41,   -41,    49,   -41
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -40,   -40,   -40,   -40,    42,     3,   -40,   -40,     9,   -40,
-     -40,     5,   -32,   -40,   -40,   -14,   -39,   -21,    43,   -40,
-     -40,   -40,   -40,   -40,   -40
+     -41,   -41,   -41,   -41,    50,     6,   -41,   -41,    12,   -41,
+     -41,     4,   -31,   -41,   -41,   -15,   -40,   -22,    43,   -41,
+     -41,   -41,   -41,   -41,   -41
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -644,60 +647,62 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -20
 static const yytype_int8 yytable[] =
 {
-      30,    48,    39,     4,    40,     7,     3,    67,     7,    41,
-      42,     8,    15,    16,     8,    17,    10,     4,    14,    18,
-      19,   -16,    45,    20,     4,    21,    82,    49,    46,    84,
-      65,    70,    71,    72,    73,    74,    75,    76,    77,    78,
-      79,    80,    81,   -19,    66,    68,    89,    13,    22,    23,
-      24,    25,    26,    17,    88,     0,    69,    18,    19,    44,
-       0,    20,     4,    21,    18,     0,     0,     0,    20,     0,
-       0,    87,     0,     0,    90,     0,     0,    92,     0,     0,
-       0,     0,     0,     0,     0,     0,    22,    23,    24,    25,
-      26,     0,     0,    22,    23,    24,    25,    26,    52,    53,
-      54,    55,    56,    57,    58,    59,    60,    61,    62,    63,
-       0,     0,     0,     0,     0,     0,    83,    52,    53,    54,
-      55,    56,    57,    58,    59,    60,    61,    62,    63,     0,
-       0,     0,     0,     0,     0,    86,    52,    53,    54,    55,
-      56,    57,    58,    59,    60,    61,    62,    63,    64,    52,
-      53,    54,    55,    56,    57,    58,    59,    60,    61,    62,
-      63
+      31,    49,    40,    66,    41,    16,    17,    69,     7,    42,
+      43,     7,    10,     3,     8,    18,     4,     8,     4,    19,
+      20,    67,    15,    21,     4,    22,    84,    85,    46,    47,
+      87,    72,    73,    74,    75,    76,    77,    78,    79,    80,
+      81,    82,    83,   -19,    70,    13,    50,    68,    23,    24,
+      25,    26,    27,    18,    93,    14,    71,    19,    20,    92,
+      45,    21,     4,    22,    19,     0,     0,     0,    21,     0,
+       0,     0,     0,     0,    91,     0,     0,    94,     0,     0,
+      96,     0,     0,     0,     0,     0,    23,    24,    25,    26,
+      27,     0,     0,    23,    24,    25,    26,    27,    53,    54,
+      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
+       0,     0,     0,     0,     0,     0,    86,    53,    54,    55,
+      56,    57,    58,    59,    60,    61,    62,    63,    64,     0,
+       0,     0,     0,     0,     0,    90,    53,    54,    55,    56,
+      57,    58,    59,    60,    61,    62,    63,    64,     0,     0,
+       0,     0,    88,    53,    54,    55,    56,    57,    58,    59,
+      60,    61,    62,    63,    64,    65,    53,    54,    55,    56,
+      57,    58,    59,    60,    61,    62,    63,    64
 };
 
 static const yytype_int8 yycheck[] =
 {
-      14,    22,     3,    13,     5,     2,     0,    46,     5,    10,
-      11,     2,    16,    17,     5,     4,    40,    13,    31,     8,
-       9,    31,    30,    12,    13,    14,    65,    32,    35,    68,
-      15,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    32,    30,    35,     7,     5,    37,    38,
-      39,    40,    41,     4,    86,    -1,    51,     8,     9,    16,
-      -1,    12,    13,    14,     8,    -1,    -1,    -1,    12,    -1,
-      -1,    85,    -1,    -1,    88,    -1,    -1,    91,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    37,    38,    39,    40,
+      15,    23,     3,    15,     5,    16,    17,    47,     2,    10,
+      11,     5,    40,     0,     2,     4,    13,     5,    13,     8,
+       9,    33,    31,    12,    13,    14,    66,    67,    30,    35,
+      70,    53,    54,    55,    56,    57,    58,    59,    60,    61,
+      62,    63,    64,    32,    35,    42,    32,    30,    37,    38,
+      39,    40,    41,     4,     7,     5,    52,     8,     9,    90,
+      17,    12,    13,    14,     8,    -1,    -1,    -1,    12,    -1,
+      -1,    -1,    -1,    -1,    89,    -1,    -1,    92,    -1,    -1,
+      95,    -1,    -1,    -1,    -1,    -1,    37,    38,    39,    40,
       41,    -1,    -1,    37,    38,    39,    40,    41,    18,    19,
       20,    21,    22,    23,    24,    25,    26,    27,    28,    29,
       -1,    -1,    -1,    -1,    -1,    -1,    36,    18,    19,    20,
       21,    22,    23,    24,    25,    26,    27,    28,    29,    -1,
       -1,    -1,    -1,    -1,    -1,    36,    18,    19,    20,    21,
-      22,    23,    24,    25,    26,    27,    28,    29,    30,    18,
-      19,    20,    21,    22,    23,    24,    25,    26,    27,    28,
-      29
+      22,    23,    24,    25,    26,    27,    28,    29,    -1,    -1,
+      -1,    -1,    34,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    18,    19,    20,    21,
+      22,    23,    24,    25,    26,    27,    28,    29
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    44,    45,     0,    13,    46,    47,    48,    51,    52,
-      40,    49,    61,    47,    31,    16,    17,     4,     8,     9,
-      12,    14,    37,    38,    39,    40,    41,    48,    51,    53,
-      58,    59,    60,    62,    63,    64,    65,    66,    67,     3,
-       5,    10,    11,    50,    61,    30,    35,    57,    60,    32,
-      54,    58,    18,    19,    20,    21,    22,    23,    24,    25,
-      26,    27,    28,    29,    30,    15,    30,    59,    35,    54,
-      60,    60,    60,    60,    60,    60,    60,    60,    60,    60,
-      60,    60,    59,    36,    59,    55,    36,    58,    55,     7,
-      58,    56,    58
+       0,    45,    46,     0,    13,    47,    48,    49,    52,    53,
+      40,    50,    62,    42,    48,    31,    16,    17,     4,     8,
+       9,    12,    14,    37,    38,    39,    40,    41,    49,    52,
+      54,    59,    60,    61,    63,    64,    65,    66,    67,    68,
+       3,     5,    10,    11,    51,    62,    30,    35,    58,    61,
+      32,    55,    59,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    15,    33,    30,    60,
+      35,    55,    61,    61,    61,    61,    61,    61,    61,    61,
+      61,    61,    61,    61,    60,    60,    36,    60,    34,    56,
+      36,    59,    56,     7,    59,    57,    59
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1512,12 +1517,16 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 89 "parser.y"
-    { fclose(f); ;}
+#line 90 "parser.y"
+    {
+                                        EndBlock();
+                                        fclose(f);
+                                        YYACCEPT;
+                                     ;}
     break;
 
   case 3:
-#line 93 "parser.y"
+#line 97 "parser.y"
     {
                     f = fopen("compiled_code.txt", "w");
                     NewBlock();
@@ -1525,7 +1534,7 @@ yyreduce:
     break;
 
   case 8:
-#line 107 "parser.y"
+#line 112 "parser.y"
     {
                                                 p = (yyvsp[(2) - (5)].attributedSymbol)._.LI.list;
                                                 t = (yyvsp[(4) - (5)].attributedSymbol)._.TP.type;
@@ -1535,14 +1544,14 @@ yyreduce:
                                                     p->_.Var.pType = t;
 
                                                     p->_.Var.nSize = (yyvsp[(4) - (5)].attributedSymbol)._.TP.size;
-
+                                                    p->_.Var.nIndex = globalIndex++;
                                                     p = p->pNext;
                                                 }
                                             ;}
     break;
 
   case 9:
-#line 122 "parser.y"
+#line 127 "parser.y"
     {
                                     (yyvsp[(3) - (3)].attributedSymbol)._.IDD.obj->pNext = (yyvsp[(1) - (3)].attributedSymbol)._.LI.list;
                                     (yyval.attributedSymbol)._.LI.list = (yyvsp[(3) - (3)].attributedSymbol)._.IDD.obj;
@@ -1550,47 +1559,47 @@ yyreduce:
     break;
 
   case 10:
-#line 126 "parser.y"
+#line 131 "parser.y"
     { (yyval.attributedSymbol)._.LI.list = (yyvsp[(1) - (1)].attributedSymbol)._.IDD.obj; ;}
     break;
 
   case 11:
-#line 129 "parser.y"
+#line 134 "parser.y"
     { (yyval.attributedSymbol)._.TP.type = pInt;
                           (yyval.attributedSymbol)._.TP.size = 1;
                         ;}
     break;
 
   case 12:
-#line 132 "parser.y"
+#line 137 "parser.y"
     { (yyval.attributedSymbol)._.TP.type = pChar;
                           (yyval.attributedSymbol)._.TP.size = 1;
                         ;}
     break;
 
   case 13:
-#line 135 "parser.y"
+#line 140 "parser.y"
     { (yyval.attributedSymbol)._.TP.type = pBool;
                           (yyval.attributedSymbol)._.TP.size = 1;
                         ;}
     break;
 
   case 14:
-#line 138 "parser.y"
+#line 143 "parser.y"
     { (yyval.attributedSymbol)._.TP.type = pString;
                           (yyval.attributedSymbol)._.TP.size = 1;
                         ;}
     break;
 
   case 16:
-#line 148 "parser.y"
+#line 153 "parser.y"
     {
 	NewBlock();
 ;}
     break;
 
   case 20:
-#line 161 "parser.y"
+#line 166 "parser.y"
     {
                     (yyval.attributedSymbol)._.MT.label = newLabel();
                     fprintf(f, "\tTJMP_FW L%d\n", (yyval.attributedSymbol)._.MT.label);
@@ -1598,84 +1607,84 @@ yyreduce:
     break;
 
   case 21:
-#line 169 "parser.y"
+#line 174 "parser.y"
     {
                     l2 = newLabel();
                     l1 = l2 - 1;
                     (yyval.attributedSymbol)._.ME.label = l2;
-                    fprintf(f, "\tJMP_FW L%d\nL%d\n", l2, l1);
+                    fprintf(f, "\tTJMP_FW L%d\nL%d\n", l2, l1);
                 ;}
     break;
 
   case 22:
-#line 178 "parser.y"
+#line 183 "parser.y"
     {
                     l = newLabel();
                     (yyval.attributedSymbol)._.MW.label = l;
-                    fprintf(f, "L%d\n", 1);
+                    fprintf(f, "L%d\n", l);
                 ;}
     break;
 
   case 23:
-#line 185 "parser.y"
+#line 190 "parser.y"
     {
                                                                     t = (yyvsp[(3) - (6)].attributedSymbol)._.E.type;
                                                                     l = (yyvsp[(5) - (6)].attributedSymbol)._.MT.label;
                                                                     if(!CheckTypes(t, pBool))
                                                                     {
-                                                                        printf("Erro, bool expected\n");
+                                                                        Error(ERR_BOOL_TYPE_EXPECTED);
                                                                     }
                                                                     fprintf(f, "L%d:\n", l);
                                                                 ;}
     break;
 
   case 24:
-#line 195 "parser.y"
+#line 200 "parser.y"
     {
                                                                             t = (yyvsp[(3) - (9)].attributedSymbol)._.E.type;
                                                                             l = (yyvsp[(8) - (9)].attributedSymbol)._.ME.label;
                                                                             if(!CheckTypes(t, pBool))
                                                                             {
 
-                                                                                printf("Erro, bool expected\n");
+                                                                                Error(ERR_BOOL_TYPE_EXPECTED);
                                                                             }
-                                                                            fprintf(f, "\tJMP_FW L%d\nL%d\n", l2, l1);
+                                                                            fprintf(f, "L%d:\n", l);
                                                                         ;}
     break;
 
   case 25:
-#line 206 "parser.y"
+#line 211 "parser.y"
     {
 
                                                                         t = (yyvsp[(4) - (7)].attributedSymbol)._.E.type;
 
                                                                         l1 = (yyvsp[(2) - (7)].attributedSymbol)._.MW.label;
-                                                                        l2 = (yyvsp[(2) - (7)].attributedSymbol)._.MW.label;
+                                                                        l2 = (yyvsp[(6) - (7)].attributedSymbol)._.MT.label;
                                                                         if(!CheckTypes(t, pBool))
                                                                         {
 
-                                                                            printf("Erro, bool expected\n");
+                                                                            Error(ERR_BOOL_TYPE_EXPECTED);
                                                                         }
                                                                         fprintf(f, "\tJMP_BW L%d\nL%d\n", l1, l2);
                                                                     ;}
     break;
 
   case 26:
-#line 221 "parser.y"
+#line 226 "parser.y"
     { 
 			EndBlock();  
 		;}
     break;
 
   case 27:
-#line 226 "parser.y"
+#line 231 "parser.y"
     {
                                                                     fprintf(f, "\tPOP\n");
                                                                 ;}
     break;
 
   case 28:
-#line 230 "parser.y"
+#line 235 "parser.y"
     {
                                                                     fprintf(f, "\tTJMP_FW L\n");
 
@@ -1683,218 +1692,108 @@ yyreduce:
     break;
 
   case 30:
-#line 239 "parser.y"
+#line 244 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pBool))
-                                                            {
-
-                                                               printf("Erro, bool expected\n");
-                                                            }
-
-                                                            if(!CheckTypes((yyvsp[(3) - (3)].attributedSymbol)._.F.type, pBool))
-                                                            {
-
-                                                                printf("Erro, bool expected\n");
-                                                            }
+                                                            CheckTypesForLogicalOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tAND\n" );
                                                         ;}
     break;
 
   case 31:
-#line 254 "parser.y"
+#line 249 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pBool))
-                                                            {
-
-                                                                printf("Erro, bool expected\n");
-                                                            }
-
-                                                            if(!CheckTypes((yyvsp[(3) - (3)].attributedSymbol)._.F.type, pBool))
-                                                            {
-
-                                                                printf("Erro, bool expected\n");
-                                                            }
+                                                            CheckTypesForLogicalOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tOR\n");
                                                         ;}
     break;
 
   case 32:
-#line 269 "parser.y"
+#line 254 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tLT\n");
                                                         ;}
     break;
 
   case 33:
-#line 283 "parser.y"
+#line 259 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tGT\n");
                                                         ;}
     break;
 
   case 34:
-#line 297 "parser.y"
+#line 264 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tLE\n");
                                                         ;}
     break;
 
   case 35:
-#line 311 "parser.y"
+#line 269 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tGE\n");
                                                         ;}
     break;
 
   case 36:
-#line 325 "parser.y"
+#line 274 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tEQ\n");
                                                         ;}
     break;
 
   case 37:
-#line 339 "parser.y"
+#line 279 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = pBool;
                                                             fprintf(f, "\tNE\n");
                                                         ;}
     break;
 
   case 38:
-#line 353 "parser.y"
+#line 284 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = (yyvsp[(1) - (3)].attributedSymbol)._.F.type;
                                                             fprintf(f, "\tADD\n");
                                                         ;}
     break;
 
   case 39:
-#line 367 "parser.y"
+#line 289 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                               printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = (yyvsp[(1) - (3)].attributedSymbol)._.F.type;
                                                             fprintf(f, "\tSUB\n");
                                                         ;}
     break;
 
   case 40:
-#line 381 "parser.y"
+#line 294 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                                printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                               printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = (yyvsp[(1) - (3)].attributedSymbol)._.F.type;
                                                             fprintf(f, "\tMUL\n");
                                                         ;}
     break;
 
   case 41:
-#line 395 "parser.y"
+#line 299 "parser.y"
     {
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, (yyvsp[(3) - (3)].attributedSymbol)._.F.type))
-                                                            {
-
-                                                               printf("Erro, tipos nao compativeis\n");
-                                                            }
-                                                            if(!CheckTypes((yyvsp[(1) - (3)].attributedSymbol)._.E.type, pInt))
-                                                            {
-
-                                                                printf("Erro, int expected\n");
-                                                            }
+                                                            CheckTypesForArithmeticsOperations((yyvsp[(1) - (3)].attributedSymbol), (yyvsp[(3) - (3)].attributedSymbol));
                                                             (yyval.attributedSymbol)._.E.type = (yyvsp[(1) - (3)].attributedSymbol)._.F.type;
                                                             fprintf(f, "\tDIV\n");
 
@@ -1902,18 +1801,18 @@ yyreduce:
     break;
 
   case 42:
-#line 410 "parser.y"
+#line 305 "parser.y"
     {
                                                             (yyval.attributedSymbol)._.E.type = (yyvsp[(1) - (1)].attributedSymbol)._.F.type;
                                                         ;}
     break;
 
   case 43:
-#line 415 "parser.y"
+#line 310 "parser.y"
     {
                                                             if(!CheckTypes((yyvsp[(2) - (2)].attributedSymbol)._.F.type, pBool))
                                                             {
-                                                               printf("Erro, boolean expected\n");
+                                                               Error(ERR_BOOL_TYPE_EXPECTED);
                                                             }
                                                             (yyval.attributedSymbol)._.F.type = (yyvsp[(2) - (2)].attributedSymbol)._.F.type;
                                                             fprintf(f, "\tNOT\n");
@@ -1921,7 +1820,7 @@ yyreduce:
     break;
 
   case 44:
-#line 423 "parser.y"
+#line 318 "parser.y"
     {
                                                             (yyval.attributedSymbol)._.F.type = pBool;
                                                             n = (yyvsp[(1) - (1)].attributedSymbol)._.TRUE.val;
@@ -1930,7 +1829,7 @@ yyreduce:
     break;
 
   case 45:
-#line 428 "parser.y"
+#line 323 "parser.y"
     {
                                                             (yyval.attributedSymbol)._.F.type = pBool;
                                                             n = (yyvsp[(1) - (1)].attributedSymbol)._.FALSE.val;
@@ -1939,7 +1838,7 @@ yyreduce:
     break;
 
   case 46:
-#line 433 "parser.y"
+#line 328 "parser.y"
     {
                                                             (yyval.attributedSymbol)._.F.type = pChar;
                                                             n = (yyvsp[(1) - (1)].attributedSymbol)._.CHR.pos;
@@ -1948,7 +1847,7 @@ yyreduce:
     break;
 
   case 47:
-#line 438 "parser.y"
+#line 333 "parser.y"
     {
                                                             (yyval.attributedSymbol)._.F.type = pString;
                                                             n = (yyvsp[(1) - (1)].attributedSymbol)._.STR.pos;
@@ -1957,7 +1856,7 @@ yyreduce:
     break;
 
   case 48:
-#line 443 "parser.y"
+#line 338 "parser.y"
     {
                                                             (yyval.attributedSymbol)._.F.type = pInt;
                                                             n = (yyvsp[(1) - (1)].attributedSymbol)._.NUM.pos;
@@ -1966,31 +1865,66 @@ yyreduce:
     break;
 
   case 49:
-#line 448 "parser.y"
+#line 343 "parser.y"
     {
                                                             p = (yyvsp[(1) - (1)].attributedSymbol)._.IDU.obj;
                                                             if(p->eKind != VAR_ )
                                                             {
                                                                 if(p->eKind != UNIVERSAL_)
-                                                                   printf("Erro, KIND NOT VAR\n");
+                                                                   Error(ERR_KIND_NOT_VAR);
                                                                 (yyval.attributedSymbol)._.F.type = pUniversal;
                                                             }
                                                             else
                                                             {
                                                                 (yyval.attributedSymbol)._.F.type = (yyvsp[(1) - (1)].attributedSymbol)._.IDU.obj->_.Var.pType;
-                                                                n = (yyvsp[(1) - (1)].attributedSymbol)._.IDU.name;
+                                                                n = p->_.Var.nIndex;
                                                                 fprintf(f, "\tLOAD_VAR %d\n", n);
                                                             }
                                                         ;}
     break;
 
   case 50:
-#line 463 "parser.y"
+#line 359 "parser.y"
+    {
+
+                                                            p = (yyvsp[(1) - (4)].attributedSymbol)._.IDU.obj;
+
+                                                            if (!CheckTypes((yyvsp[(3) - (4)].attributedSymbol)._.E.type, pInt))
+                                                            {
+                                                                    Error(ERR_INDEX_INVALID);
+                                                            }
+
+                                                            if( p-> eKind != VAR_ )
+                                                            {
+                                                                    Error(ERR_KIND_NOT_VAR);
+                                                            }
+                                                            else
+                                                            {
+                                                                t = p->_.Var.pType;
+
+                                                                if (t!= pString)
+                                                                {
+                                                                  if ( t-> eKind != UNIVERSAL_ )
+                                                                  Error(ERR_TYPE_STRING_EXPECTED);
+                                                                }
+                                                                else
+                                                                {
+                                                                 n = p->_.Var.nIndex;
+
+                                                                 fprintf(f,"\tCHAR_AT %d\n", n);
+                                                                }
+                                                            }
+                                                            (yyval.attributedSymbol)._.F.type = pChar;
+                                                        ;}
+    break;
+
+  case 51:
+#line 391 "parser.y"
     {
                                                             p = (yyvsp[(1) - (3)].attributedSymbol)._.IDU.obj;
                                                             if(p->eKind != VAR_)
                                                             {
-                                                                printf("Erro KIND NOT VAR\n");
+                                                                Error(ERR_KIND_NOT_VAR);
                                                                 (yyval.attributedSymbol)._.F.type = pUniversal;
                                                             }
                                                             else
@@ -2001,39 +1935,43 @@ yyreduce:
 
                                                                 if(!CheckTypes(t1, t2))
                                                                 {
-                                                                   printf("Erro de compatibilidade de tipos\n");
+                                                                   Error(ERR_TYPE_MISMATCH);
                                                                 }
                                                                 (yyval.attributedSymbol)._.F.type = t2;
 
 
-                                                                fprintf(f, "\tDUP\n\tSTORE_VAR %d\n", (yyvsp[(1) - (3)].attributedSymbol)._.IDU.name);
+                                                                fprintf(f, "\tDUP\n\tSTORE_VAR %d\n", p->_.Var.nIndex);
 
                                                             }
                                                         ;}
     break;
 
-  case 51:
-#line 490 "parser.y"
+  case 52:
+#line 418 "parser.y"
     {
                 (yyval.attributedSymbol)._.IDD.name = (yyvsp[(1) - (1)].tokenSecundario);
 		object *p;
                         if( (p= SearchCurrentLevel((yyvsp[(1) - (1)].tokenSecundario))) != NULL)
-				printf("Erro de redeclaracao");
+                        {
+                                Error(ERR_REDECL);
+                        }
 			else
+                        {
                                 p = Define((yyvsp[(1) - (1)].tokenSecundario));
+                        }
 		p->eKind = NO_KIND_DEF_;
                 (yyval.attributedSymbol)._.IDD.obj = p;
 	;}
     break;
 
-  case 52:
-#line 505 "parser.y"
+  case 53:
+#line 437 "parser.y"
     {
                 (yyval.attributedSymbol)._.IDD.name = (yyvsp[(1) - (1)].tokenSecundario);
 		object *p;
                         if( (p= SearchAllSymbolTable((yyvsp[(1) - (1)].tokenSecundario))) == NULL)
 			{
-				printf("Erro de nao declaracao");
+                                Error(ERR_NOT_DECL);
                                 p = Define((yyvsp[(1) - (1)].tokenSecundario));
 			}
 
@@ -2041,38 +1979,38 @@ yyreduce:
 	;}
     break;
 
-  case 53:
-#line 519 "parser.y"
+  case 54:
+#line 451 "parser.y"
     { (yyval.attributedSymbol)._.TRUE.type = pBool;
                (yyval.attributedSymbol)._.TRUE.val = 1;
              ;}
     break;
 
-  case 54:
-#line 524 "parser.y"
+  case 55:
+#line 457 "parser.y"
     { (yyval.attributedSymbol)._.FALSE.type = pBool;
                 (yyval.attributedSymbol)._.FALSE.val = 0;
               ;}
     break;
 
-  case 55:
-#line 529 "parser.y"
+  case 56:
+#line 463 "parser.y"
     { (yyval.attributedSymbol)._.CHR.type = pChar;
                     (yyval.attributedSymbol)._.CHR.pos = (yyvsp[(1) - (1)].tokenSecundario);
                     (yyval.attributedSymbol)._.CHR.val = getCharConst((yyvsp[(1) - (1)].tokenSecundario));
                   ;}
     break;
 
-  case 56:
-#line 535 "parser.y"
+  case 57:
+#line 469 "parser.y"
     { (yyval.attributedSymbol)._.STR.type = pString;
                     (yyval.attributedSymbol)._.STR.pos = (yyvsp[(1) - (1)].tokenSecundario);
-                    (yyval.attributedSymbol)._.STR.val = getStringConst((yyvsp[(1) - (1)].tokenSecundario));
+                    (yyval.attributedSymbol)._.STR.val = getStringConst((yyvsp[(1) - (1)].tokenSecundario)); //VERIFICAR
                   ;}
     break;
 
-  case 57:
-#line 541 "parser.y"
+  case 58:
+#line 475 "parser.y"
     { (yyval.attributedSymbol)._.NUM.type = pInt;
                   (yyval.attributedSymbol)._.NUM.pos = (yyvsp[(1) - (1)].tokenSecundario);
                   (yyval.attributedSymbol)._.NUM.val = getIntConst((yyvsp[(1) - (1)].tokenSecundario));
@@ -2081,7 +2019,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2085 "parser.tab.c"
+#line 2023 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2295,10 +2233,6 @@ yyreturn:
 }
 
 
-#line 547 "parser.y"
+#line 481 "parser.y"
 
-int main( void )
-{
-	return yyparse();
-}
 

@@ -240,20 +240,21 @@ t_token nextToken(){
     //Se inicia por aspas duplas
 	if (nextChar == '"')
 	{
-                printf("STRING   ");
 
 		char string[MAX_STR_LEN+1];
-		int i = 1;
+        int i = 0;
 		do
 		{
 			string[i++] = nextChar;
 			nextChar = readChar();
 		}
         while(nextChar != '"'); //le as aspas de encerramento
-		string[i++] = '"';
-		string[i] = '\0';
+        string[i++] = nextChar;
+        string[i] = '\0';
 
-        token = STRING;     //constante do tipo string
+        nextChar = readChar();
+
+        token = STRINGVAL;     //constante do tipo string
 		tokenSecundario = addStringConst(string);
 	}
 	else
@@ -397,7 +398,10 @@ t_token nextToken(){
 			}
 			break;
 		default:
-			token = UNKNOWN;
+            if(nextChar == EOF)
+                token = _EOF;
+            else
+                token = UNKNOWN;
 	}
     //printf("Token da Vez: %u\n", token);
 	return token;
@@ -412,7 +416,7 @@ int yylex(void)
 {
         t_token token_lido = nextToken();
 
-        printf("     Token lido: %u\n ", token_lido); //DEBUG
+        printToken(token_lido); //DEBUG
 
         switch(token_lido)
         {
@@ -423,10 +427,143 @@ int yylex(void)
         case BOOLEAN:
                 yylval.tokenSecundario = tokenSecundario;
                 break;
+        case _EOF:
+            fclose(fileToCompile);
+            break;
         default:
                 yylval.tokenSecundario = 0;
                 break;
         }
 
         return token_lido;
+}
+
+void printToken(t_token token)
+{
+    switch (token) {
+    case BOOLEAN:
+        printf("BOOLEAN");
+        break;
+    case BREAK:
+        printf("BREAK");
+        break;
+    case CHAR:
+        printf("CHAR");
+        break;
+    case DO:
+        printf("DO");
+        break;
+    case T_FALSE:
+        printf("FALSE");
+        break;
+    case IF:
+        printf("IF");
+        break;
+    case INTEGER:
+        printf("INTEGER");
+        break;
+    case STRING:
+        printf("STRING");
+        break;
+    case T_TRUE:
+        printf("TRUE");
+        break;
+    case VAR:
+        printf("VAR");
+        break;
+    case WHILE:
+        printf("WHILE");
+        break;
+    case ASSIGN:
+        printf("ASSIGN");
+        break;
+    case COLON:
+        printf("COLON");
+        break;
+    case COMMA:
+        printf("COMMA");
+        break;
+    case NOT_EQUAL:
+        printf("NOT_EQUAL");
+        break;
+    case LESS_THAN:
+        printf("LESS_THAN");
+        break;
+    case GREATER_THAN:
+        printf("GREATER_THAN");
+        break;
+    case LESS_OR_EQUAL:
+        printf("LESS_OR_EQUAL");
+        break;
+    case GREATER_OR_EQUAL:
+        printf("GREATER_OR_EQUAL");
+        break;
+    case EQUAL_EQUAL:
+        printf("EQUAL_EQUAL");
+        break;
+    case AND:
+        printf("AND");
+        break;
+    case OR:
+        printf("OR");
+        break;
+    case PLUS:
+        printf("PLUS");
+        break;
+    case MINUS:
+        printf("MINUS");
+        break;
+    case TIMES:
+        printf("TIMES");
+        break;
+    case DIVIDE:
+        printf("DIVIDE");
+        break;
+    case SEMICOLON:
+        printf("SEMICOLON");
+        break;
+    case LEFT_BRACES:
+        printf("LEFT_BRACES");
+        break;
+    case RIGHT_BRACES:
+        printf("RIGHT_BRACES");
+        break;
+    case LEFT_SQUARE:
+        printf("LEFT_SQUARE");
+        break;
+    case RIGHT_SQUARE:
+        printf("RIGHT_SQUARE");
+        break;
+    case LEFT_PARENTHESIS:
+        printf("LEFT_PARENTHESIS");
+        break;
+    case RIGHT_PARENTHESIS:
+        printf("RIGHT_PARENTHESIS");
+        break;
+    case NOT:
+        printf("NOT");
+        break;
+    case CHARACTER:
+        printf("CHARACTER");
+        break;
+    case STRINGVAL:
+        printf("STRINGVAL");
+        break;
+    case ID:
+        printf("ID");
+        break;
+    case NUMERAL:
+        printf("NUMERAL");
+        break;
+    case _EOF:
+        printf("EOF");
+        break;
+    case UNKNOWN:
+        printf("UNKNOWN");
+        break;
+    default:
+        printf("Deveria dar erro de analise lexica");
+        break;
+    }
+    printf("\n");
 }

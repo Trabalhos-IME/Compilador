@@ -17,7 +17,7 @@
 	}
 
         pobject p, t, t1, t2;
-        int l, l1, l2, n, s;
+        int l, l1, l2, n, s, globalIndex = 0;
 
         FILE* f ;
 %}
@@ -77,6 +77,7 @@
 %token <tokenSecundario> ID
 %token <tokenSecundario> NUMERAL
 
+%token _EOF
 %token UNKNOWN
 
 
@@ -86,14 +87,18 @@
 
 %%
 
-PROGRAM: OPEN LDE  /* close*/     { fclose(f); }
+PROGRAM: OPEN LDE _EOF /* close*/    {
+                                        EndBlock();
+                                        fclose(f);
+                                        YYACCEPT;
+                                     }
 ;
-
 
 OPEN: /*empty*/ {
                     f = fopen("compiled_code.txt", "w");
                     NewBlock();
                 }
+;
 
 
 LDE:	LDE DE
@@ -113,7 +118,7 @@ DV:		VAR LI COLON TP SEMICOLON   {
                                                     p->_.Var.pType = t;
 
                                                     p->_.Var.nSize = $4._.TP.size;
-
+                                                    p->_.Var.nIndex = globalIndex++;
                                                     p = p->pNext;
                                                 }
                                             }
@@ -170,7 +175,7 @@ ME: /*empty*/
                     l2 = newLabel();
                     l1 = l2 - 1;
                     $$._.ME.label = l2;
-                    fprintf(f, "\tJMP_FW L%d\nL%d\n", l2, l1);
+                    fprintf(f, "\tTJMP_FW L%d\nL%d\n", l2, l1);
                 }
 ;
 
@@ -178,7 +183,7 @@ MW: /*empty*/
                 {
                     l = newLabel();
                     $$._.MW.label = l;
-                    fprintf(f, "L%d\n", 1);
+                    fprintf(f, "L%d\n", l);
                 }
 ;
                 /*if(x) statement*/
@@ -200,7 +205,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
 
                                                                                 Error(ERR_BOOL_TYPE_EXPECTED);
                                                                             }
-                                                                            fprintf(f, "\tJMP_FW L%d\nL%d\n", l2, l1);
+                                                                            fprintf(f, "L%d:\n", l);
                                                                         }
                 /*Laco while: while(x) statement;*/
 |		WHILE MW LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S   {
@@ -208,7 +213,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
                                                                         t = $4._.E.type;
 
                                                                         l1 = $2._.MW.label;
-                                                                        l2 = $2._.MW.label;
+                                                                        l2 = $6._.MT.label;
                                                                         if(!CheckTypes(t, pBool))
                                                                         {
 
@@ -346,10 +351,43 @@ F:		NOT F                                   {
                                                             else
                                                             {
                                                                 $$._.F.type = $1._.IDU.obj->_.Var.pType;
-                                                                n = $1._.IDU.name;
+                                                                n = p->_.Var.nIndex;
                                                                 fprintf(f, "\tLOAD_VAR %d\n", n);
                                                             }
                                                         }
+
+|               IDU LEFT_SQUARE E RIGHT_SQUARE        {
+
+                                                            p = $1._.IDU.obj;
+
+                                                            if (!CheckTypes($3._.E.type, pInt))
+                                                            {
+                                                                    Error(ERR_INDEX_INVALID);
+                                                            }
+
+                                                            if( p-> eKind != VAR_ )
+                                                            {
+                                                                    Error(ERR_KIND_NOT_VAR);
+                                                            }
+                                                            else
+                                                            {
+                                                                t = p->_.Var.pType;
+
+                                                                if (t!= pString)
+                                                                {
+                                                                  if ( t-> eKind != UNIVERSAL_ )
+                                                                  Error(ERR_TYPE_STRING_EXPECTED);
+                                                                }
+                                                                else
+                                                                {
+                                                                 n = p->_.Var.nIndex;
+
+                                                                 fprintf(f,"\tCHAR_AT %d\n", n);
+                                                                }
+                                                            }
+                                                            $$._.F.type = pChar;
+                                                        }
+
 |		IDU ASSIGN E                            {
                                                             p = $1._.IDU.obj;
                                                             if(p->eKind != VAR_)
@@ -370,7 +408,7 @@ F:		NOT F                                   {
                                                                 $$._.F.type = t2;
 
 
-                                                                fprintf(f, "\tDUP\n\tSTORE_VAR %d\n", $1._.IDU.name);
+                                                                fprintf(f, "\tDUP\n\tSTORE_VAR %d\n", p->_.Var.nIndex);
 
                                                             }
                                                         }
@@ -430,7 +468,7 @@ CHR:	CHARACTER { $$._.CHR.type = pChar;
 
 STR:	STRINGVAL { $$._.STR.type = pString;
                     $$._.STR.pos = $1;
-                    $$._.STR.val = getStringConst($1);
+                    $$._.STR.val = getStringConst($1); //VERIFICAR
                   }
 ;
 
@@ -441,7 +479,3 @@ NUM:	NUMERAL { $$._.NUM.type = pInt;
 ;
 
 %%
-int main( void )
-{
-	return yyparse();
-}

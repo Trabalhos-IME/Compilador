@@ -6,7 +6,8 @@ var z:string;
 	y = 9;
 	while (x != y)
 	{
-		
+		var x:integer;
+		x=10;
 		if ( x > y ) x = x - y;
 		else y = y - x;
 	}

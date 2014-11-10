@@ -22,6 +22,11 @@ void Error(int code)
     case ERR_TYPE_MISMATCH:
         MYSTRDUP(error_message, "Erro de incompatibilidade de tipo");
         break;
+    case ERR_TYPE_STRING_EXPECTED:
+        MYSTRDUP(error_message, "Tipo string esperado");
+        break;
+    case ERR_INDEX_INVALID:
+        MYSTRDUP(error_message, "Indice invalido");
     default:
         MYSTRDUP(error_message, "Erro desconhecido");
         break;
