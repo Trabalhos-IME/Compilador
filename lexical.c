@@ -535,6 +535,12 @@ void printToken(t_token token)
     case RIGHT_PARENTHESIS:
         printf("RIGHT_PARENTHESIS");
         break;
+    case PLUS_PLUS:
+        printf("PLUS_PLUS");
+        break;
+    case MINUS_MINUS:
+        printf("MINUS_MINUS");
+        break;
     case NOT:
         printf("NOT");
         break;

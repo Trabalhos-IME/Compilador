@@ -6,7 +6,7 @@ var i, f:integer;
 
 	while(i <= 5)
 	{
-		f = f*i++;
+		f = f * i++;
 	}
-	return f;
+	
 }

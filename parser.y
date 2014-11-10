@@ -30,8 +30,6 @@
 }
 
 
-
-
 %token BOOLEAN
 %token BREAK
 %token CHAR
@@ -197,7 +195,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
                                                                     {
                                                                         Error(ERR_BOOL_TYPE_EXPECTED);
                                                                     }
-                                                                    fprintf(f, "L%d:\n", l);
+                                                                    fprintf(f, "L%d\n", l);
                                                                 }
                 /*if e else: if(x) statement; else statement*/
 |		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S ELSE ME S    {
@@ -208,7 +206,7 @@ S:		IF LEFT_PARENTHESIS E  RIGHT_PARENTHESIS MT S     {
 
                                                                                 Error(ERR_BOOL_TYPE_EXPECTED);
                                                                             }
-                                                                            fprintf(f, "L%d:\n", l);
+                                                                            fprintf(f, "L%d\n", l);
                                                                         }
                 /*Laco while: while(x) statement;*/
 |		WHILE MW LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S   {

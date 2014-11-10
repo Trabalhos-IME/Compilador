@@ -35,3 +35,9 @@ void Error(int code)
     printf("%s\n", error_message);
     free(error_message);
 }
+
+
+void debugPrint(FILE *f, char *msg)
+{
+    fprintf(f, "%s", msg);
+}
