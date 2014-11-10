@@ -62,6 +62,9 @@
 %left TIMES
 %left DIVIDE
 
+%token PLUS_PLUS
+%token MINUS_MINUS
+
 %token SEMICOLON
 
 %token LEFT_BRACES
@@ -412,6 +415,44 @@ F:		NOT F                                   {
 
                                                             }
                                                         }
+
+|               PLUS_PLUS IDU                           {
+                                                            p = $2._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tINC\n\tDUP\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+|               IDU PLUS_PLUS                           {
+                                                            p = $1._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tDUP\n\tINC\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+|               MINUS_MINUS IDU                           {
+                                                            p = $2._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tDEC\n\tDUP\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+|               IDU MINUS_MINUS                         {
+                                                            p = $1._.IDU.obj;
+                                                            if(!CheckTypes(p->_.Var.pType, pInt))
+                                                            {
+                                                               Error(ERR_INT_TYPE_EXPECTED);
+                                                            }
+                                                            $$._.F.type = pInt;
+                                                            fprintf(f, "\tLOAD_VAR %d\n\tDUP\n\tDEC\n\tSTORE_VAR %d\n", p->_.Var.nIndex, p->_.Var.nIndex);
+                                                        }
+
 ;
 
 IDD: ID

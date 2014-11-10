@@ -258,7 +258,6 @@ t_token nextToken(){
 	else
 	switch(nextChar)
 	{
-        printf("TO NO SWITCH\n");
         //Se inicia por aspas simples
 		case '\'':
 			nextChar = readChar();
@@ -349,27 +348,27 @@ t_token nextToken(){
 			break;
 		case '+':
             nextChar = readChar();
-            /*if( nextChar == '+')
+            if( nextChar == '+')
 			{
 				token = PLUS_PLUS;
 				nextChar = readChar();
 			}
 			else
-            {*/
+            {
 				token = PLUS;
-            //}
+            }
 			break;
 		case '-':
 			nextChar = readChar();
-            /*if( nextChar == '-')
+            if( nextChar == '-')
 			{
 				token = MINUS_MINUS;
 				nextChar = readChar();
 			}
 			else
-            {*/
+            {
 				token = MINUS;
-            //}
+            }
 			break;
 		case '*':
 			nextChar = readChar();
@@ -401,9 +400,7 @@ t_token nextToken(){
             else
                 token = UNKNOWN;
 	}
-    //printf("Token da Vez: %u\n", token);
 	return token;
-	printf("END TOKEN\n");
 }
 /**
  * @brief yylex
